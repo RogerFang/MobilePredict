@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="edu.whu.irlab.dao.PredictRecordMapper" >
+  <resultMap id="BaseResultMap" type="edu.whu.irlab.model.PredictRecord" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="model" property="model" jdbcType="VARCHAR" />
+    <result column="last_month" property="lastMonth" jdbcType="VARCHAR" />
+    <result column="predict_month" property="predictMonth" jdbcType="VARCHAR" />
+    <result column="index_path" property="indexPath" jdbcType="VARCHAR" />
+    <result column="result_path" property="resultPath" jdbcType="VARCHAR" />
+    <result column="predict_precision" property="predictPrecision" jdbcType="VARCHAR" />
+    <result column="state" property="state" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, model, last_month, predict_month, index_path, result_path, predict_precision, 
+    state
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from predict
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from predict
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="edu.whu.irlab.model.PredictRecord" >
+    insert into predict (id, model, last_month, 
+      predict_month, index_path, result_path, 
+      predict_precision, state)
+    values (#{id,jdbcType=INTEGER}, #{model,jdbcType=VARCHAR}, #{lastMonth,jdbcType=VARCHAR}, 
+      #{predictMonth,jdbcType=VARCHAR}, #{indexPath,jdbcType=VARCHAR}, #{resultPath,jdbcType=VARCHAR}, 
+      #{predictPrecision,jdbcType=VARCHAR}, #{state,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="edu.whu.irlab.model.PredictRecord" >
+    insert into predict
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="model != null" >
+        model,
+      </if>
+      <if test="lastMonth != null" >
+        last_month,
+      </if>
+      <if test="predictMonth != null" >
+        predict_month,
+      </if>
+      <if test="indexPath != null" >
+        index_path,
+      </if>
+      <if test="resultPath != null" >
+        result_path,
+      </if>
+      <if test="predictPrecision != null" >
+        predict_precision,
+      </if>
+      <if test="state != null" >
+        state,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="model != null" >
+        #{model,jdbcType=VARCHAR},
+      </if>
+      <if test="lastMonth != null" >
+        #{lastMonth,jdbcType=VARCHAR},
+      </if>
+      <if test="predictMonth != null" >
+        #{predictMonth,jdbcType=VARCHAR},
+      </if>
+      <if test="indexPath != null" >
+        #{indexPath,jdbcType=VARCHAR},
+      </if>
+      <if test="resultPath != null" >
+        #{resultPath,jdbcType=VARCHAR},
+      </if>
+      <if test="predictPrecision != null" >
+        #{predictPrecision,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null" >
+        #{state,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="edu.whu.irlab.model.PredictRecord" >
+    update predict
+    <set >
+      <if test="model != null" >
+        model = #{model,jdbcType=VARCHAR},
+      </if>
+      <if test="lastMonth != null" >
+        last_month = #{lastMonth,jdbcType=VARCHAR},
+      </if>
+      <if test="predictMonth != null" >
+        predict_month = #{predictMonth,jdbcType=VARCHAR},
+      </if>
+      <if test="indexPath != null" >
+        index_path = #{indexPath,jdbcType=VARCHAR},
+      </if>
+      <if test="resultPath != null" >
+        result_path = #{resultPath,jdbcType=VARCHAR},
+      </if>
+      <if test="predictPrecision != null" >
+        predict_precision = #{predictPrecision,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null" >
+        state = #{state,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="edu.whu.irlab.model.PredictRecord" >
+    update predict
+    set model = #{model,jdbcType=VARCHAR},
+      last_month = #{lastMonth,jdbcType=VARCHAR},
+      predict_month = #{predictMonth,jdbcType=VARCHAR},
+      index_path = #{indexPath,jdbcType=VARCHAR},
+      result_path = #{resultPath,jdbcType=VARCHAR},
+      predict_precision = #{predictPrecision,jdbcType=VARCHAR},
+      state = #{state,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+
+
+  <update id="updateByModelAndPredictMonth" parameterType="edu.whu.irlab.model.PredictRecord" >
+    update predict
+    set index_path = #{indexPath,jdbcType=VARCHAR},
+    result_path = #{resultPath,jdbcType=VARCHAR},
+    state = #{state,jdbcType=INTEGER}
+    where model = #{model,jdbcType=VARCHAR} AND predict_month = #{predictMonth,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByModelAndPredictMonth" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from predict
+    where model = #{0} AND predict_month = #{1}
+  </select>
+  <select id="selectByPredictMonth" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from predict
+    where predict_month = #{0}
+  </select>
+</mapper>
